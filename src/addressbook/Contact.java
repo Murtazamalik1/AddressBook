@@ -1,15 +1,15 @@
 package addressbook;
 
 public class Contact {
-    String firstName;
-    String lastName;
-    String city;
-    String state;
-    String email;
+  private String firstName;
+  private String lastName;
+  private String city;
+  private String state;
+  private String email;
 
-    String address;
-    double phoneNumber;
-    int zip;
+  private String address;
+  private long phoneNumber;
+  private int zip;
 
     public String getFirstName() {
         return firstName;
@@ -59,11 +59,11 @@ public class Contact {
         this.address = address;
     }
 
-    public double getPhoneNumber() {
+    public long getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
