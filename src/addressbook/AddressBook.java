@@ -82,6 +82,55 @@ public class AddressBook {
                 }
     }
 
+    void deleteContact() {
+        System.out.println(" Are You Want To Delete Anything From Contact/\n1) FirstName\n2) lastName\n3) Address\n4) State\n5) Email\n6) PhoneNumber\n7 No");
+        int option = scanner.nextInt();
+        switch (option) {
+            case 1:
+                System.out.println("Enter First Name That You Want To Delete ");
+                String firstName = scanner.next();
+            if (firstName.equals(contact.getFirstName())) ;
+            contact.setFirstName(null);
+            break;
+
+            case 2:
+                System.out.println("Enter Last Name That You Want To Delete");
+                String lastNme = scanner.next();
+                if (lastNme.equals(contact.getLastName()));
+                contact.setLastName(null);
+                break;
+            case 3:
+                System.out.println("Enter Address That You Want To Delete");
+                String address = scanner.next();
+                if (address.equals(contact.getAddress()));
+                contact.setAddress(null);
+                break;
+            case 4:
+                System.out.println("Enter State That You Want To Delete");
+                String state = scanner.next();
+                if (state.equals(contact.getState()));
+                contact.setState(null);
+                break;
+            case 5:
+                System.out.println("Enter Email That You Want To Delete");
+                String email = scanner.next();
+                if (email.equals(contact.getEmail()));
+                contact.setEmail(null);
+                break;
+            case 6:
+                System.out.println("Enter Phone Number That You Want To Delete");
+                String phoneNumber = scanner.next();
+                if (phoneNumber.equals(contact.getPhoneNumber()));
+                contact.setPhoneNumber(null);
+                break;
+            case 7:
+                System.out.println("");
+                break;
+            default:
+                System.out.println("Wrong Input :");
+        }
+    }
+
     Contact display(){
         return contact;
     }
