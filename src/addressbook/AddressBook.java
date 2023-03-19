@@ -1,11 +1,25 @@
 package addressbook;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class AddressBook {
 
     ArrayList<Contact> list = new ArrayList<>();
     Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public String toString() {
+        return "AddressBook{" +
+                "list=" + list +
+                ", scanner=" + scanner +
+                '}';
+    }
+
+
     public void addContact() {
             Contact contact = new Contact();
             System.out.println("Enter First Name");
@@ -80,6 +94,46 @@ public class AddressBook {
                 System.out.println("Contact Removed");
             } else {
                 System.out.println("contact not found");
+            }
+        }
+    }
+
+    public void searchContact(){
+        boolean exit = false;
+        while (!exit){
+            System.out.println("""
+                    Enter Option
+                    1) To Search By City
+                    2) To Search By State
+                    3) Exit""");
+            int option = scanner.nextInt();
+
+            switch (option){
+                case 1:
+                    System.out.println("enter the city to search contact");
+                    String city = scanner.next();
+                    for (Contact contact: list){
+                        if (contact.getCity().contains(city)){
+                            System.out.println(" "+contact);
+                        }
+                        else {
+                            System.out.println("City Not Found In Contact");
+                        }
+                    }
+                case 2:
+                    System.out.println("enter the state to search contact");
+                    String state = scanner.next();
+                    for (Contact contact: list){
+                        if (contact.getState().contains(state)){
+                            System.out.println(" " +contact);
+                        }
+                        else {
+                            System.out.println("State Not Found In Contact");
+                        }
+                    }
+                case 3:
+                    exit = true;
+                    break;
             }
         }
     }
