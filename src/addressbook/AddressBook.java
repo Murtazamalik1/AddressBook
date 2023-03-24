@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBook {
-
     ArrayList<Contact> list = new ArrayList<>();
     Map<Contact, String> cityDictionary = new HashMap<>();
     Map<Contact, String> stateDictionary = new HashMap<>();
@@ -17,7 +16,6 @@ public class AddressBook {
                 ", scanner=" + scanner +
                 '}';
     }
-
 
     public void addContact() {
         Contact contact = new Contact();
@@ -167,6 +165,7 @@ public class AddressBook {
                             }
                         }
                     }
+                    System.out.println("No of contacts in city " + city + " are " + cityDictionary.size());
                     System.out.println("Contacts in city " + city + " are:");
                     System.out.println(cityDictionary.keySet());  // keySet() return a set view of All the keys present in hashmap
                     break;
@@ -180,6 +179,7 @@ public class AddressBook {
                             }
                         }
                     }
+                    System.out.println("No of contacts in state " + state + " are " + stateDictionary.size());
                     System.out.println("Contacts in state " + state + " are:");
                     System.out.println(stateDictionary.keySet());
                     break;
@@ -188,7 +188,6 @@ public class AddressBook {
                     break;
                 default:
                     break;
-
             }
         }
     }
