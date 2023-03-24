@@ -1,14 +1,13 @@
 package addressbook;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBook {
 
     ArrayList<Contact> list = new ArrayList<>();
+    Map<Contact, String> cityDictionary = new HashMap<>();
+    Map<Contact, String> stateDictionary = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -21,25 +20,26 @@ public class AddressBook {
 
 
     public void addContact() {
-            Contact contact = new Contact();
-            System.out.println("Enter First Name");
-            contact.setFirstName(scanner.next());
-            System.out.println("Enter Last Name");
-            contact.setLastName(scanner.next());
-            System.out.println("Enter Address");
-            contact.setAddress(scanner.next());
-            System.out.println("Enter State");
-            contact.setState(scanner.next());
-            System.out.println("Enter City");
-            contact.setCity(scanner.next());
-            System.out.println("Enter Email");
-            contact.setEmail(scanner.next());
-            System.out.println("Enter Phone Number");
-            contact.setPhoneNumber(scanner.nextLong());
-            System.out.println("Enter Zip Code");
-            contact.setZip(scanner.nextInt());
-            list.add(contact);
+        Contact contact = new Contact();
+        System.out.println("Enter First Name");
+        contact.setFirstName(scanner.next());
+        System.out.println("Enter Last Name");
+        contact.setLastName(scanner.next());
+        System.out.println("Enter Address");
+        contact.setAddress(scanner.next());
+        System.out.println("Enter State");
+        contact.setState(scanner.next());
+        System.out.println("Enter City");
+        contact.setCity(scanner.next());
+        System.out.println("Enter Email");
+        contact.setEmail(scanner.next());
+        System.out.println("Enter Phone Number");
+        contact.setPhoneNumber(scanner.nextLong());
+        System.out.println("Enter Zip Code");
+        contact.setZip(scanner.nextInt());
+        list.add(contact);
     }
+
     public void editContact() {
         System.out.println("Enter The Person Name That You Want To edit ");
         String firstName = scanner.next();
@@ -77,8 +77,7 @@ public class AddressBook {
                     default:
                         System.out.println("Wrong Input");
                 }
-            }
-              else {
+            } else {
                 System.out.println("contact not found");
             }
         }
@@ -90,7 +89,7 @@ public class AddressBook {
         for (int i = 0; i < list.size(); i++) {
             Contact person = list.get(i);
             if (firstName.equals(person.getFirstName())) {
-              list.remove(i);
+                list.remove(i);
                 System.out.println("Contact Removed");
             } else {
                 System.out.println("contact not found");
@@ -98,9 +97,9 @@ public class AddressBook {
         }
     }
 
-    public void searchContact(){
+    public void searchContact() {
         boolean exit = false;
-        while (!exit){
+        while (!exit) {
             System.out.println("""
                     Enter Option
                     1) To Search By City
@@ -108,26 +107,24 @@ public class AddressBook {
                     3) Exit""");
             int option = scanner.nextInt();
 
-            switch (option){
+            switch (option) {
                 case 1:
                     System.out.println("enter the city to search contact");
                     String city = scanner.next();
-                    for (Contact contact: list){
-                        if (contact.getCity().contains(city)){
-                            System.out.println(" "+contact);
-                        }
-                        else {
+                    for (Contact contact : list) {
+                        if (contact.getCity().contains(city)) {
+                            System.out.println(" " + contact);
+                        } else {
                             System.out.println("City Not Found In Contact");
                         }
                     }
                 case 2:
                     System.out.println("enter the state to search contact");
                     String state = scanner.next();
-                    for (Contact contact: list){
-                        if (contact.getState().contains(state)){
-                            System.out.println(" " +contact);
-                        }
-                        else {
+                    for (Contact contact : list) {
+                        if (contact.getState().contains(state)) {
+                            System.out.println(" " + contact);
+                        } else {
                             System.out.println("State Not Found In Contact");
                         }
                     }
@@ -137,9 +134,62 @@ public class AddressBook {
             }
         }
     }
-        public void displayContact () {
-            for (Contact contact : list) {
-                System.out.println(contact);
+
+   public void displayContact() {
+        for (Contact contact : list) {
+            System.out.println(contact);
+        }
+    }
+
+    void viewPersonByCityOrState() {
+        if (list.isEmpty()) {
+            System.out.println("No contacts to display");
+            return;
+        }
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("""
+                    Enter option
+                    1) To view by City
+                    2) To view by State
+                    3) To exit
+                    """);
+            int option = scanner.nextInt();
+
+            switch (option) {
+                case 1:
+                    System.out.println("Enter the city name to view");
+                    String city = scanner.next().toLowerCase();
+                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                        for (Contact contacts : addressBooks.list) {
+                            if (contacts.getCity().toLowerCase().contains(city)) {
+                                cityDictionary.put(contacts, city);
+                            }
+                        }
+                    }
+                    System.out.println("Contacts in city " + city + " are:");
+                    System.out.println(cityDictionary.keySet());  // keySet() return a set view of All the keys present in hashmap
+                    break;
+                case 2:
+                    System.out.println("Enter the state name to view");
+                    String state = scanner.next().toLowerCase();
+                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                        for (Contact contacts : addressBooks.list) {
+                            if (contacts.getState().toLowerCase().contains(state)) {
+                                stateDictionary.put(contacts, state);
+                            }
+                        }
+                    }
+                    System.out.println("Contacts in state " + state + " are:");
+                    System.out.println(stateDictionary.keySet());
+                    break;
+                case 3:
+                    exit = true;
+                    break;
+                default:
+                    break;
+
             }
         }
     }
+}
