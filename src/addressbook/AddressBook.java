@@ -5,10 +5,8 @@ import java.util.stream.Collectors;
 
 public class AddressBook {
     ArrayList<Contact> list = new ArrayList<>();
-  //  Map<Contact, String> cityDictionary = new HashMap<>();
-  //  Map<Contact, String> stateDictionary = new HashMap<>();
     Scanner scanner = new Scanner(System.in);
-    public void addContact() {
+    public void addContact(  HashMap<String, AddressBook> map) {
         Contact contact = new Contact();
         System.out.println("Enter First Name");
         contact.setFirstName(scanner.next());
@@ -29,7 +27,7 @@ public class AddressBook {
         list.add(contact);
     }
 
-    public void editContact() {
+    public void editContact(  HashMap<String, AddressBook> map) {
         System.out.println("Enter The Person Name That You Want To edit ");
         String firstName = scanner.next();
        // for (Contact contact : list) {
@@ -72,7 +70,7 @@ public class AddressBook {
             }
         });
     }
-    void deleteContact() {
+    void deleteContact(  HashMap<String, AddressBook> map) {
         System.out.println("Enter Person Name That You Want To Edit");
         String firstName = scanner.next();
         //for (int i = 0; i < list.size(); i++) {
@@ -88,7 +86,7 @@ public class AddressBook {
         });
     }
 
-    public void searchContact() {
+    public void searchContact(  HashMap<String, AddressBook> map) {
         boolean exit = false;
         while (!exit) {
             System.out.println("""
@@ -127,12 +125,12 @@ public class AddressBook {
         }
     }
 
-    public void displayContact() {
+    public void displayContact(  HashMap<String, AddressBook> map) {
         for (Contact contact : list) {
             System.out.println(contact);
         }
     }
-    void viewPersonByCityOrState() {
+    void viewPersonByCityOrState(  HashMap<String, AddressBook> map) {
         if (list.isEmpty()) {
             System.out.println("No contacts to display");
             return;
@@ -146,13 +144,12 @@ public class AddressBook {
                     3) To exit
                     """);
             int option = scanner.nextInt();
-
             switch (option) {
                 case 1:
                     System.out.println("Enter the city name to view");
                     String city = scanner.next().toLowerCase();
                     Map<String,List<Contact>> cityDictionary = new HashMap<>();
-                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                    for (AddressBook addressBooks : map.values()) {
                         List<Contact> contactCityList = addressBooks.list.stream().filter(x-> x.getCity().equals(city)).collect(Collectors.toList());
                             if (cityDictionary.containsKey(city)){
                                cityDictionary.get(city).addAll(contactCityList);
@@ -169,7 +166,7 @@ public class AddressBook {
                     System.out.println("Enter the state name to view");
                     String state = scanner.next().toLowerCase();
                     Map<String,List<Contact>> stateDictionary = new HashMap<>();
-                    for (AddressBook addressBooks : AddressBookMain.map.values()) {
+                    for (AddressBook addressBooks : map.values()) {
                         List<Contact> contactStateList = addressBooks.list.stream().filter(x-> x.getState().equals(state)).collect(Collectors.toList());
                             if (stateDictionary.containsKey(state)) {
                                 stateDictionary.get(state).addAll(contactStateList);
@@ -188,6 +185,27 @@ public class AddressBook {
                 default:
                     break;
             }
+        }
+        static boolean fileAgenda(String path) throws IOException {
+
+            File file = new File(path);
+            boolean newFile = false;
+
+            if (file.createNewFile()) {
+                System.out.println("Created Successfully........!");
+                newFile = true;
+            } else {
+                System.out.println("Already exist.........!");
+            }
+            return newFile;
+        }
+
+        private static void fileWrite(String path, List<Contact> bookList) throws IOException {
+
+            FileWriter fileWriter = new FileWriter(path);
+            fileWriter.write(String.valueOf(bookList));
+            fileWriter.close();
+            System.out.println("File writen successfully....");
         }
     }
     @Override

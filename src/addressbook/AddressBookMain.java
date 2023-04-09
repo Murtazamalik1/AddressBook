@@ -1,19 +1,13 @@
 package addressbook;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
 public class AddressBookMain {
-   static Scanner scr = new Scanner(System.in);
-   //public Map<String,AddressBook> addressBookListMap = new HashMap<>();
-   static HashMap<String, AddressBook> map = new HashMap<>();
-    static ArrayList<String> addressBooks = new ArrayList<>();
-    static String currentAddressBook;
-    static String addressBookName;
     public static void main(String[] args) {
+        AddressBookMain mainBook = new AddressBookMain();
+        Scanner scr = new Scanner(System.in);
+        HashMap<String, AddressBook> map = new HashMap<>();
         AddressBook addressBook = new AddressBook();
         System.out.println("Welcome to Address Book Program");
-
         boolean exit = false;
         while (!exit) {
             System.out.println("""
@@ -27,75 +21,34 @@ public class AddressBookMain {
                     7) view person by City or State
                     8) To exit
                     """);
-
             int option = scr.nextInt();
             switch (option) {
                 case 1:
-                    map.get(currentAddressBook).addContact();
+                    map.get(addressBook).addContact(map);
                     break;
                 case 2:
-                    map.get(currentAddressBook).editContact();
+                    map.get(addressBook).editContact(map);
                     break;
                 case 3:
-                    map.get(currentAddressBook).displayContact();
+                    map.get(addressBook).displayContact(map);
                     break;
                 case 4:
-                    map.get(currentAddressBook).deleteContact();
+                    map.get(addressBook).deleteContact(map);
                     break;
                 case 5:
-                    chooseAddressBook();
-                    break;
                 case 6:
-                    addressBook.searchContact();
-                     break;
+                    addressBook.searchContact(map);
+                    break;
                 case 7:
-                    addressBook.viewPersonByCityOrState();
+                    addressBook.viewPersonByCityOrState(map);
                     break;
                 case 8:
                     exit = true;
                     break;
                 default:
-                break;
+                    break;
             }
         }
-        System.out.println(addressBooks);
+        System.out.println(addressBook);
     }
-
-    static void chooseAddressBook() {
-        AddressBook add = new AddressBook();
-        System.out.println("""
-                Press 1 to add AddressBook
-                Press 2 to select AddressBook""");
-        int option = scr.nextInt();
-        switch (option) {
-            case 1:
-                System.out.println("Enter address book name");
-                addressBookName = scr.next().toLowerCase();
-                if (map.containsKey(addressBookName)) {
-                    System.out.println("\nAddress book already exist\n");
-                } else {
-                    // AddressBook addressBook = new AddressBook();
-                    map.put(addressBookName, add);
-                    currentAddressBook = addressBookName;
-                }
-                addressBooks.add(addressBookName);
-                break;
-          /*  case 2:
-                System.out.println("Enter address book name");
-                addressBookName = scr.next().toLowerCase();
-                if (!map.containsKey(addressBookName)) {
-                    System.out.println("\nAddressBook not Found\n");
-                    chooseAddressBook();
-                } else
-                    currentAddressBook = addressBookName;
-                break;
-            default:
-                break;
-        }
-
-           */
-        }
-    }
-
 }
-
